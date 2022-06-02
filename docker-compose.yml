@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  irrigation-system-mysql:
+    image: mysql:8.0.20
+    environment:
+      - MYSQL_USER=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+      - MYSQL_DATABASE=irrigationSystem
+    ports:
+      - 3306:3306
+    volumes:
+      - db:/var/lib/mysql
+    command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8mb4 --explicit_defaults_for_timestamp
+
+
+  irrigation-system-app:
+    depends_on:
+      - irrigation-system-mysql
+    image: irrigation-system-image:1
+    build:
+      context: irrigation-system
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+        SPRING_DATASOURCE_URL  : jdbc:mysql://irrigation-system-mysql:3306/irrigationSystem?useUnicode=true&characterEncoding=utf8&useSSL=false
+        SPRING_DATASOURCE_USERNAME : root
+        SPRING_DATASOURCE_PASSWORD :
+        SPRING_LIQUIBASE_CHANNGE-LOG : classpath:/config/liquibase/master.xml
+        SPRING_MVC_PATHMATCH_MATCHING-STRATEGY : ANT_PATH_MATCHER
+        RETRY_MAXATTEMPTS: 2
+        RETRY_MAXDELAY : 1000
+        SPRING_JPA_HIBERNATE_DDL-AUTO : update
+
+  irrigation-system-dashboard:
+    build: ./irrigation-system-dashboard/
+    links:
+      - "irrigation-system-app"
+    depends_on:
+      - "irrigation-system-app"
+    ports:
+      - "80:80"
+
+volumes:
+  db:

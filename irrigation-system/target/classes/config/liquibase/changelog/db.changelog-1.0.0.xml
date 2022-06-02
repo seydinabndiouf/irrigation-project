@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog 
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog" 
+	xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd 
+	http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+
+    <changeSet author="seydina" id="1.0.0">
+        <createTable tableName="agricultural_crop">
+            <column name="agricultural_crop_id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="water_amount_per_square_meter" type="double">
+            </column>
+        </createTable>
+
+        <createTable tableName="plot_land_configuration">
+            <column name="plot_land_id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="water_amount" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="irrigation_time_slot" type="smallint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="next_irrigation_date" type="timestamp">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="irrigation_status" type="VARCHAR(50)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <createTable tableName="plot_land">
+            <column name="plot_land_id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="area" type="double">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="agricultural_crop_id" type="bigint"/>
+        </createTable>
+
+
+        <addForeignKeyConstraint baseColumnNames="agricultural_crop_id"
+                                 baseTableName="plot_land"
+                                 constraintName="fk_plot_land_agricultural_crop"
+                                 referencedColumnNames="agricultural_crop_id"
+                                 referencedTableName="agricultural_crop"/>
+
+        <addForeignKeyConstraint baseColumnNames="plot_land_id"
+                                 baseTableName="plot_land_configuration"
+                                 constraintName="fk_plot_land_configuration_plot_land"
+                                 referencedColumnNames="plot_land_id"
+                                 referencedTableName="plot_land"/>
+
+    </changeSet>
+</databaseChangeLog>

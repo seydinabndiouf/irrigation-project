@@ -1,0 +1,44 @@
+<div class="container">
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+  <!-- Id Column -->
+  <ng-container matColumnDef="ID">
+    <th mat-header-cell *matHeaderCellDef>No.</th>
+    <td mat-cell *matCellDef="let element">{{element.plotLandId}}</td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="Name">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let element">{{element.plotLandName}}</td>
+  </ng-container>
+
+  <!-- Area Column -->
+  <ng-container matColumnDef="Area">
+    <th mat-header-cell *matHeaderCellDef>Area</th>
+    <td mat-cell *matCellDef="let element">{{element.plotLandArea}}</td>
+  </ng-container>
+
+  <!-- Status Column -->
+  <ng-container matColumnDef="Status">
+    <th mat-header-cell *matHeaderCellDef>Status</th>
+    <td mat-cell *matCellDef="let element">{{element.plotLandConfiguration.status}}</td>
+  </ng-container>
+
+    <!-- Irrigation TimeSlot Column -->
+    <ng-container matColumnDef="IrrigationTimeSlot">
+      <th mat-header-cell *matHeaderCellDef>Irrigation TimeSlot</th>
+      <td mat-cell *matCellDef="let element">{{element.plotLandConfiguration.irrigationTimeSlot}}</td>
+    </ng-container>
+
+        <!-- Next Irrigation Date Column -->
+        <ng-container matColumnDef="NextIrrigationDate">
+          <th mat-header-cell *matHeaderCellDef>Next Irrigation Date</th>
+          <td mat-cell *matCellDef="let element">{{element.plotLandConfiguration.nextIrrigationDate}}</td>
+        </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+</div>
+
+
