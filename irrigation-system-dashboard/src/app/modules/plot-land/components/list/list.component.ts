@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Data } from 'src/app/core/model/data.model';
 import { PlotLand } from 'src/app/core/model/plot-land.model';
 import { PlotLandService } from '../../services/plot-land.service';
@@ -11,7 +11,7 @@ import {DataSource} from '@angular/cdk/collections';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  plotLands: PlotLand[] = [];
+  @Input() plotLands!: PlotLand[];
 
   displayedColumns: string[] = ['ID', 'Name', 'Area', 'Status', 'IrrigationTimeSlot', 'NextIrrigationDate'];
 
@@ -22,18 +22,11 @@ export class ListComponent implements OnInit {
    }
 
   ngOnInit(): void {
-
-    this.plotLandService.getAll().subscribe((data: Data<PlotLand>)=>{
-      console.log(data);
-      this.dataSource.data = data.content;
-    }) 
+  
   }
 
-  addData() {
-
-  }
-
-  removeData() {
+  ngAfterViewChecked(){
+    this.dataSource.data = this.plotLands;
   }
 
 }

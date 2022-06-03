@@ -31,7 +31,7 @@ public class PlotLandConfigurationEntity {
     @Column(name = "irrigation_time_slot", nullable = false)
     int irrigationTimeSlot;
 
-    @Column(name = "next_irrigation_date", insertable = false)
+    @Column(name = "next_irrigation_date", nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
     Date nextIrrigationDate;
 

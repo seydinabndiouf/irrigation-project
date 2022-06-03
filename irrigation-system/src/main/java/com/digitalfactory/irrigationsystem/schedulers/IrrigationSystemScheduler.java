@@ -6,6 +6,7 @@ import com.digitalfactory.irrigationsystem.services.PlotLandService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,13 +21,14 @@ import java.util.List;
 @Transactional
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @RequiredArgsConstructor
+@Slf4j
 public class IrrigationSystemScheduler {
 
     final PlotLandService plotLandService;
 
-    @Scheduled(cron = "0 0/5 * * * *")
+    @Scheduled(cron = "${scheduler.cronExpression}")
     public void irrigatePlotLand(){
-
+        log.info("irrigatePlotLand scheduler started");
         /* Initializing hasResult boolean */
         boolean hasResult = true;
 
@@ -36,7 +38,7 @@ public class IrrigationSystemScheduler {
             /* Getting outdated initialized plotlands */
             List<IrrigationStatus> exceptedIrrigationStatuses = new ArrayList<>();
             exceptedIrrigationStatuses.add(IrrigationStatus.NOT_IRRIGATED);
-            exceptedIrrigationStatuses.add(IrrigationStatus.NOT_IRRIGATED);
+            exceptedIrrigationStatuses.add(IrrigationStatus.TO_BE_IRRIGATED);
 
             Page<PlotLand> plotLands = plotLandService.readPlotLandsByFilters(exceptedIrrigationStatuses,new Date(), Pageable.unpaged());
 

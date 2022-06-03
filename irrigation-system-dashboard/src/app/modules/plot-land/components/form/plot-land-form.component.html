@@ -4,9 +4,6 @@
   <mat-form-field appearance="fill">
       <mat-label>Name</mat-label>
       <input matInput formControlName="name" required>
- <!--      <mat-error *ngIf="plotlandForm.get('name')?.invalid">
-        Name is <strong>required</strong>
-        </mat-error> -->
     </mat-form-field>
 
     <mat-form-field class="example-full-width" appearance="fill">
@@ -18,8 +15,8 @@
 
     <mat-form-field class="example-full-width" appearance="fill">
       <mat-label>Agricultural Crop</mat-label>
-      <mat-select>
-        <mat-option *ngFor="let item of agriculturalCrops; index as i;" formControlName="crop" value={{item}}>
+      <mat-select formControlName="crop">
+        <mat-option *ngFor="let item of agriculturalCrops; index as i;" value={{item.agriculturalCropId}}>
           {{item.name}}
         </mat-option>
       </mat-select>
@@ -34,7 +31,8 @@
   <div class="example-container">
     <mat-form-field appearance="fill">
       <mat-label>Amount of water</mat-label>
-      <input matInput formControlName="water" required>
+      <input type="number" matInput formControlName="water" required>
+      <mat-hint>Amount of water in liter</mat-hint>
     </mat-form-field>
 
     <mat-form-field class="example-full-width" appearance="fill">

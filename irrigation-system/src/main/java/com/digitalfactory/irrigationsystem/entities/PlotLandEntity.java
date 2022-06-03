@@ -33,7 +33,6 @@ public class PlotLandEntity {
     @OneToOne(mappedBy = "plotLand", cascade = CascadeType.ALL, orphanRemoval=true)
     private PlotLandConfigurationEntity plotLandConfiguration;
 
-
     @ManyToOne
     @JoinColumn(name = "agricultural_crop_id")
     AgriculturalCropEntity agriculturalCrop;

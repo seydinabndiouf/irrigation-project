@@ -31,16 +31,21 @@ services:
         SPRING_MVC_PATHMATCH_MATCHING-STRATEGY : ANT_PATH_MATCHER
         RETRY_MAXATTEMPTS: 2
         RETRY_MAXDELAY : 1000
+        SCHEDULER_CRONEXPRESSION: 0 0/5 * * * *
         SPRING_JPA_HIBERNATE_DDL-AUTO : update
 
+
   irrigation-system-dashboard:
-    build: ./irrigation-system-dashboard/
-    links:
-      - "irrigation-system-app"
-    depends_on:
-      - "irrigation-system-app"
+    build:
+      context: irrigation-system-dashboard
+      dockerfile: Dockerfile
+      args:
+        API_BASE_URL: http://127.0.0.1:8080/v1/
     ports:
-      - "80:80"
+      - "8081:80" # Map the exposed port 80 on the container to port 8081 on the host machine
+    restart: always
+    depends_on:
+      - irrigation-system-app
 
 volumes:
   db:

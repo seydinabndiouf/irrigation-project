@@ -1,5 +1,5 @@
 export interface AgriculturalCrop {
-    agriculturalCropId: number;
-    name: string;
-    waterAmount: number;
+    agriculturalCropId?: number;
+    name?: string;
+    waterAmount?: number;
 }

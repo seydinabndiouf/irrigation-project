@@ -2,9 +2,7 @@ package com.digitalfactory.irrigationsystem.controllers;
 
 import com.digitalfactory.irrigationsystem.models.PlotLand;
 import com.digitalfactory.irrigationsystem.models.plotland.IrrigationStatus;
-import com.digitalfactory.irrigationsystem.models.plotland.PlotLandConfiguration;
 import com.digitalfactory.irrigationsystem.services.PlotLandService;
-import com.digitalfactory.irrigationsystem.services.plotland.PlotLandConfigurationService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -34,9 +32,7 @@ public class PlotLandController {
 
     private final PlotLandService plotLandService;
 
-    private final PlotLandConfigurationService plotLandConfigurationService;
-
-    @ApiOperation(value = "Create PlotLand, if required, the configuration is also created", notes = "Create a plotLand (and potentially the configuration) in the PlotLand Manager")
+    @ApiOperation(value = "Create plot of land, if required, the configuration is also created", notes = "Create a plotLand and configure it) ")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Success"),
             @ApiResponse(code = 400, message = "Request sent by the client was syntactically incorrect"),
@@ -50,7 +46,7 @@ public class PlotLandController {
         return plotLandService.createPlotLand(plotLand);
     }
 
-    @ApiOperation(value = "Read a plotLand by his identifier", notes = "Read a plotLand in the PlotLand Manager by his identifier")
+    @ApiOperation(value = "Read a plotLand by his identifier", notes = "Read a plotLand by his identifier")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"), 
             @ApiResponse(code = 400, message = "Request sent by the client was syntactically incorrect"),
@@ -66,7 +62,7 @@ public class PlotLandController {
     }
     
 
-    @ApiOperation(value = "Read paginated plotLand by filters", notes = "Read paginated plotLand in the PlotLand Manager by filters")
+    @ApiOperation(value = "Read paginated plotLand by filters", notes = "Read paginated plotLand by filters")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page."),
@@ -88,7 +84,7 @@ public class PlotLandController {
         return plotLandService.readPlotLandsByFilters(exceptedIrrigationStatuses, fromNextIrrigationDate, pageable);
     }
 
-    @ApiOperation(value = "Update a plotLand", notes = "Update a plotLand in the PlotLand Manager")
+    @ApiOperation(value = "Update a plotLand", notes = "Update a plot of land")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = "Success"), 
             @ApiResponse(code = 400, message = "Request sent by the client was syntactically incorrect"),
@@ -105,24 +101,4 @@ public class PlotLandController {
         /* Updating plotLand */
         return plotLandService.updatePlotLand(plotLand);
     }
-
-
-    @ApiOperation(value = "Update plotLand configuration", notes = "Update plotLand configuration in the PlotLand Manager")
-    @ApiResponses(value = {
-        @ApiResponse(code = 204, message = "No content"),
-        @ApiResponse(code = 400, message = "Request sent by the client was syntactically incorrect"),
-        @ApiResponse(code = 500, message = "Internal server error during request processing")})
-    @PutMapping(value = "/plotlands/{plotLandId}/configuration", consumes = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public PlotLandConfiguration updatePlotLandConfiguration(
-        @ApiParam(value = "PlotLand configuration to update", required = true, example = "1") @PathVariable("plotLandId") Long plotLandId,
-        @Valid @ApiParam(value = "PlotLand configuration to update", required = true) @RequestBody PlotLandConfiguration plotLandConfiguration)
-    {
-        /* Setting plotLand ID */
-        plotLandConfiguration.setPlotLandId(plotLandId);
-
-        /* Updating plotLand configuration */
-        return plotLandConfigurationService.updatePlotLandConfiguration(plotLandConfiguration);
-    }
-
 }

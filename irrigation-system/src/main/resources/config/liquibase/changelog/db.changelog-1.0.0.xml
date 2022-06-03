@@ -8,7 +8,7 @@
 
     <changeSet author="seydina" id="1.0.0">
         <createTable tableName="agricultural_crop">
-            <column name="agricultural_crop_id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="agricultural_crop_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
@@ -19,7 +19,7 @@
         </createTable>
 
         <createTable tableName="plot_land_configuration">
-            <column name="plot_land_id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="plot_land_id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
 
@@ -40,7 +40,7 @@
         </createTable>
 
         <createTable tableName="plot_land">
-            <column name="plot_land_id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="plot_land_id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">

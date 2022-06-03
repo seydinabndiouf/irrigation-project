@@ -4,13 +4,14 @@ import { Observable, catchError, throwError } from 'rxjs';
 import { Data } from 'src/app/core/model/data.model';
 import { PlotLand } from 'src/app/core/model/plot-land.model';
 import { AgriculturalCrop } from 'src/app/core/model/plot-land/agricultural-crop.model';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlotLandService {
 
-  private apiServer = "http://localhost:8080/v1";
+  private apiServer = environment.API_BASE_URL;
   
   httpOptions = {
     headers: new HttpHeaders({
@@ -25,6 +26,10 @@ export class PlotLandService {
 
   getAgriculturalCrop(): Observable<AgriculturalCrop[]>{
     return this.httpClient.get<AgriculturalCrop[]>(this.apiServer + '/agriculturalcrops')
+  }
+
+  createPlotLand(plotLand:PlotLand): Observable<PlotLand>{
+    return this.httpClient.post<PlotLand>(this.apiServer + '/plotlands', plotLand)
   }
 
 }

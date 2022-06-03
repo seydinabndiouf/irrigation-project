@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormGroupDirective, NgForm, Validators } from '
 import { ErrorStateMatcher } from '@angular/material/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Data } from 'src/app/core/model/data.model';
+import { PlotLand } from 'src/app/core/model/plot-land.model';
 import { AgriculturalCrop } from 'src/app/core/model/plot-land/agricultural-crop.model';
 import { PlotLandService } from '../../services/plot-land.service';
 
@@ -39,7 +40,7 @@ export class PlotLandFormComponent implements OnInit {
       Validators.required,   
     ]),
 
-    crop : new FormControl('', [
+    crop : new FormControl(null, [
       Validators.required,   
     ]),
     });
@@ -50,9 +51,23 @@ export class PlotLandFormComponent implements OnInit {
     }
 
     submit(): void {
-      console.log("test");
-      
+    let plotLand: PlotLand = {
+      plotLandId: null,
+      plotLandName: this.plotlandForm.value.name,
+      plotLandArea: this.plotlandForm.value.area,
+      plotLandConfiguration: {
+        plotLandId: null,
+        waterAmount : this.plotlandForm.value.water, 
+        irrigationTimeSlot: this.plotlandForm.value.time 
+      },
+      agriculturalCrop:{agriculturalCropId: +this.plotlandForm.value.crop}
     }
+    
+
+    this.plotLandService.createPlotLand(plotLand).subscribe((data: PlotLand) => { 
+      this.dialogRef.close();
+    }) 
+  }
   
 
 }

@@ -20,7 +20,7 @@ public class AgriculturalCropController {
     
     private final AgriculturalCropService agriculturalCropService;
 
-    @ApiOperation(value = "Read paginated agriculturalCrop by filters", notes = "Read paginated agriculturalCrop in the AgriculturalCrop Manager by filters")
+    @ApiOperation(value = "Read paginated agriculturalCrop by filters", notes = "Read paginated agriculturalCrop by filters")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", dataType = "integer", paramType = "query", value = "Results page you want to retrieve (0..N)"),
             @ApiImplicitParam(name = "size", dataType = "integer", paramType = "query", value = "Number of records per page."),
